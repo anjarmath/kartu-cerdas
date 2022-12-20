@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "105504636787",
+    "project_id": "sdlab-6934e",
+    "storage_bucket": "sdlab-6934e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105504636787:android:75fd15baa04c041b664f06",
+        "android_client_info": {
+          "package_name": "com.example.barcode_detector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105504636787-kg18tcr978qucjqkj887hp4mjpbrd3ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrNVkk9-Ptqpdfkpo2S843SWRXsOC8aZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105504636787-kg18tcr978qucjqkj887hp4mjpbrd3ur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
