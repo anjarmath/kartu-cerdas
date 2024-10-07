@@ -1,4 +1,3 @@
-import 'package:kartu_cerdas/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -18,17 +17,17 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daftar Tabungan'),
+        title: const Text('Daftar Tabungan'),
       ),
       body: Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: RadioListTile(
-                  title: Text("Kelas V-A"),
+                  title: const Text("Kelas V-A"),
                   value: 'a',
                   groupValue: kelas,
                   onChanged: (value) {
@@ -38,10 +37,10 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                   },
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: RadioListTile(
-                  title: Text("Kelas V-B"),
+                  title: const Text("Kelas V-B"),
                   value: 'b',
                   groupValue: kelas,
                   onChanged: (value) {
@@ -53,12 +52,12 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.2,
-                child: Center(
+                child: const Center(
                   child: Text(
                     'NIS',
                     style: TextStyle(
@@ -67,9 +66,9 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
-                child: Center(
+                child: const Center(
                   child: Text(
                     '',
                     style: TextStyle(
@@ -78,9 +77,9 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.2,
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Tabungan',
                     style: TextStyle(
@@ -102,23 +101,23 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                 return Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: Center(
                               child: Text(
                                 kelas == 'a'
                                     ? kelasA[position].toString()
                                     : kelasB[position].toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: Text(
                               kelas == 'a'
@@ -126,7 +125,7 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                                   : namaKelasB[position].toString(),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: TextButton(
                               onPressed: () {
@@ -138,7 +137,7 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                                       kelasB[position].toString(), position);
                                 }
                               },
-                              child: Icon(Icons.open_in_new,
+                              child: const Icon(Icons.open_in_new,
                                   color: Colors.blue, size: 18),
                             ),
                             //
@@ -164,7 +163,8 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.95,
                 height: MediaQuery.of(context).size.height * 0.7,
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -174,15 +174,15 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                       kelas == 'a' ? namaKelasA[index] : namaKelasB[index],
                       textAlign: TextAlign.left,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 22.0,
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(height: 28),
-                    Row(
+                    const SizedBox(height: 28),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -199,7 +199,7 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                       thickness: 2.0,
                       color: Colors.black.withAlpha(80),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Expanded(
                       child: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
@@ -216,7 +216,7 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                                 itemBuilder: (context, index) {
                                   return Column(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -234,7 +234,7 @@ class _DaftarPerpustakaanState extends State<DaftarPerpustakaan> {
                                   );
                                 });
                           } else {
-                            return Text('Tidak ada buku dipinjam');
+                            return const Text('Tidak ada buku dipinjam');
                           }
                         },
                       ),

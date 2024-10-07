@@ -1,6 +1,4 @@
-import 'package:kartu_cerdas/currencyFormat.dart';
 import 'package:kartu_cerdas/kelas.dart';
-import 'package:kartu_cerdas/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,30 +10,21 @@ class ConfirmPagePerpustakaan extends StatefulWidget {
 
   @override
   State<ConfirmPagePerpustakaan> createState() =>
-      _ConfirmPagePerpustakaanState(nis);
+      _ConfirmPagePerpustakaanState();
 }
 
 class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
-  final String nis;
-  _ConfirmPagePerpustakaanState(this.nis);
-
   String pil = 'a';
   String? buku;
-  TextEditingController nama_buku = new TextEditingController();
+  TextEditingController namaBukuController = TextEditingController();
   int? saldoSekarang;
   int load = 0;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Konfirmasi Tabungan'),
+        title: const Text('Konfirmasi Tabungan'),
       ),
       body: Column(
         children: [
@@ -44,37 +33,39 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 18),
+                  const SizedBox(height: 18),
                   Text(
                     'Nama Siswa:',
                     style: TextStyle(
                         color: Colors.black.withAlpha(140), fontSize: 20),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    kelasA.indexOf(nis) != -1
-                        ? namaKelasA[kelasA.indexOf(nis)]
-                        : namaKelasB[kelasB.indexOf(nis)],
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                    kelasA.contains(widget.nis)
+                        ? namaKelasA[kelasA.indexOf(widget.nis)]
+                        : namaKelasB[kelasB.indexOf(widget.nis)],
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 28),
                   ),
-                  SizedBox(height: 18),
+                  const SizedBox(height: 18),
                   Text(
                     'Nomor Induk:',
                     style: TextStyle(
                         color: Colors.black.withAlpha(140), fontSize: 20),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    nis,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                    widget.nis,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 28),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: RadioListTile(
-                          title: Text("Pinjam Buku"),
+                          title: const Text("Pinjam Buku"),
                           value: 'a',
                           groupValue: pil,
                           onChanged: (value) {
@@ -84,10 +75,10 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
                           },
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: RadioListTile(
-                          title: Text("Kembalikan Buku"),
+                          title: const Text("Kembalikan Buku"),
                           value: 'b',
                           groupValue: pil,
                           onChanged: (value) {
@@ -99,23 +90,23 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.black,
                   ),
                   pil == 'a'
                       ? Container(
-                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: TextField(
-                            controller: nama_buku,
+                            controller: namaBukuController,
                             decoration:
-                                new InputDecoration(labelText: "Nama Buku"),
+                                const InputDecoration(labelText: "Nama Buku"),
                           ),
                         )
                       : Expanded(
                           child: StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection("siswa")
-                                .doc(nis)
+                                .doc(widget.nis)
                                 .collection("Buku")
                                 .snapshots(),
                             builder: (BuildContext context,
@@ -141,7 +132,7 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
                                   },
                                 );
                               } else {
-                                return Text('Tidak ada buku dipinjam');
+                                return const Text('Tidak ada buku dipinjam');
                               }
                             },
                           ),
@@ -151,7 +142,7 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: TextButton(
               onPressed: load == 0
                   ? () async {
@@ -172,9 +163,10 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
                 child: load == 0
                     ? Text(
                         pil == 'a' ? 'Simpan' : 'Kembalikan',
-                        style: TextStyle(color: Colors.white, fontSize: 28.0),
+                        style: const TextStyle(
+                            color: Colors.white, fontSize: 28.0),
                       )
-                    : CircularProgressIndicator(),
+                    : const CircularProgressIndicator(),
               ),
             ),
           )
@@ -186,11 +178,11 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
   Future simpan() async {
     await FirebaseFirestore.instance
         .collection("siswa")
-        .doc(nis)
+        .doc(widget.nis)
         .collection("Buku")
-        .doc(nama_buku.text)
+        .doc(namaBukuController.text)
         .set({
-      'nama': nama_buku.text,
+      'nama': namaBukuController.text,
       'diunggah': DateFormat('dd MMMM yyyy').format(DateTime.now()),
     }).then((value) {
       showDialog(
@@ -199,21 +191,22 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: MediaQuery.of(context).size.width * 0.9,
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
+                      const Text(
                         'Tersimpan',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.check_circle,
                         size: 94,
                         color: Colors.green,
@@ -246,7 +239,7 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
   Future kembalikan() async {
     await FirebaseFirestore.instance
         .collection("siswa")
-        .doc(nis)
+        .doc(widget.nis)
         .collection("Buku")
         .doc(buku)
         .delete()
@@ -257,21 +250,22 @@ class _ConfirmPagePerpustakaanState extends State<ConfirmPagePerpustakaan> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: MediaQuery.of(context).size.width * 0.9,
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
+                      const Text(
                         'Dikembalikan',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.delete_forever_rounded,
                         size: 94,
                         color: Colors.red,

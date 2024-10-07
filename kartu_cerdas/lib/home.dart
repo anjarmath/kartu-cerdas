@@ -1,10 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:kartu_cerdas/kelas.dart';
 import 'package:kartu_cerdas/perpustakaan/perpustakaan.dart';
 import 'package:kartu_cerdas/presensi/presensi.dart';
 import 'package:kartu_cerdas/tabungan/tabungan.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,13 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // bikindata();
-  }
-
   // Future bikindata() async {
   //   for (var i = 0; i < 29; i++) {
   //     await FirebaseFirestore.instance.collection('siswa').doc(kelasA[i]).set({
@@ -44,9 +33,9 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.3,
-              child: Center(
+              child: const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -74,8 +63,8 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(top: 28),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(top: 28),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(32),
@@ -84,34 +73,36 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.greenAccent,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Presensi()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const Presensi()));
                         },
                         child: Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                   color: Colors.green,
                                   borderRadius: BorderRadius.circular(12)),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.checklist_sharp,
                                 color: Colors.white,
                                 size: 48,
                               ),
                             ),
-                            SizedBox(width: 20),
-                            Text(
+                            const SizedBox(width: 20),
+                            const Text(
                               'Presensi',
                               style: TextStyle(
                                   fontSize: 28, fontWeight: FontWeight.bold),
@@ -121,10 +112,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.blueAccent.withAlpha(150),
                         borderRadius: BorderRadius.circular(20),
@@ -134,23 +125,23 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => Perpustakaan()));
+                                  builder: (_) => const Perpustakaan()));
                         },
                         child: Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                   color: Colors.blue,
                                   borderRadius: BorderRadius.circular(12)),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.menu_book_rounded,
                                 color: Colors.white,
                                 size: 48,
                               ),
                             ),
-                            SizedBox(width: 20),
-                            Text(
+                            const SizedBox(width: 20),
+                            const Text(
                               'Perpustakaan',
                               style: TextStyle(
                                   fontSize: 28, fontWeight: FontWeight.bold),
@@ -160,34 +151,36 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.orangeAccent.withAlpha(150),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Tabungan()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const Tabungan()));
                         },
                         child: Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                   color: Colors.orange,
                                   borderRadius: BorderRadius.circular(12)),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.attach_money_outlined,
                                 color: Colors.white,
                                 size: 48,
                               ),
                             ),
-                            SizedBox(width: 20),
-                            Text(
+                            const SizedBox(width: 20),
+                            const Text(
                               'Tabungan',
                               style: TextStyle(
                                   fontSize: 28, fontWeight: FontWeight.bold),

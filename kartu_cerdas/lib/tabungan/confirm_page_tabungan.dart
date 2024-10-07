@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:kartu_cerdas/currencyFormat.dart';
 import 'package:kartu_cerdas/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,29 +14,27 @@ class ConfirmPageTabungan extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ConfirmPageTabungan> createState() => _ConfirmPageTabunganState(nis);
+  State<ConfirmPageTabungan> createState() => _ConfirmPageTabunganState();
 }
 
 class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
-  final String nis;
-  _ConfirmPageTabunganState(this.nis);
-
   String pil = 'a';
-  TextEditingController jumlah = new TextEditingController();
+  TextEditingController jumlah = TextEditingController();
   int? saldoSekarang;
   int load = 0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     jumlah.text = '';
     getSaldo();
   }
 
   Future getSaldo() async {
-    DocumentSnapshot saldo =
-        await FirebaseFirestore.instance.collection('siswa').doc(nis).get();
+    DocumentSnapshot saldo = await FirebaseFirestore.instance
+        .collection('siswa')
+        .doc(widget.nis)
+        .get();
     setState(() {
       if (saldo.get('tabungan') != null) {
         saldoSekarang = saldo.get('tabungan');
@@ -52,7 +48,7 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Konfirmasi Tabungan'),
+        title: const Text('Konfirmasi Tabungan'),
       ),
       body: Column(
         children: [
@@ -66,42 +62,45 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
                     style: TextStyle(
                         color: Colors.black.withAlpha(140), fontSize: 20),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    kelasA.indexOf(nis) != -1
-                        ? namaKelasA[kelasA.indexOf(nis)]
-                        : namaKelasB[kelasB.indexOf(nis)],
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                    kelasA.contains(widget.nis)
+                        ? namaKelasA[kelasA.indexOf(widget.nis)]
+                        : namaKelasB[kelasB.indexOf(widget.nis)],
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 28),
                   ),
-                  SizedBox(height: 18),
+                  const SizedBox(height: 18),
                   Text(
                     'Nomor Induk:',
                     style: TextStyle(
                         color: Colors.black.withAlpha(140), fontSize: 20),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    nis,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                    widget.nis,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 28),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Tabungan Saat ini:',
                     style: TextStyle(
                         color: Colors.black.withAlpha(140), fontSize: 20),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     CurrencyFormat.convertToIdr(saldoSekarang, 2),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 28),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: RadioListTile(
-                          title: Text("Isi tabungan"),
+                          title: const Text("Isi tabungan"),
                           value: 'a',
                           groupValue: pil,
                           onChanged: (value) {
@@ -111,10 +110,10 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
                           },
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: RadioListTile(
-                          title: Text("Ambil tabungan"),
+                          title: const Text("Ambil tabungan"),
                           value: 'b',
                           groupValue: pil,
                           onChanged: (value) {
@@ -127,10 +126,10 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
                     ],
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
                       controller: jumlah,
-                      decoration: new InputDecoration(labelText: "Jumlah"),
+                      decoration: const InputDecoration(labelText: "Jumlah"),
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -142,7 +141,7 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: TextButton(
               onPressed: load == 0
                   ? () async {
@@ -173,7 +172,7 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
                         'Simpan',
                         style: TextStyle(color: Colors.white, fontSize: 28.0),
                       )
-                    : CircularProgressIndicator(),
+                    : const CircularProgressIndicator(),
               ),
             ),
           )
@@ -183,7 +182,10 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
   }
 
   Future ubahSaldo() async {
-    await FirebaseFirestore.instance.collection("siswa").doc(nis).update({
+    await FirebaseFirestore.instance
+        .collection("siswa")
+        .doc(widget.nis)
+        .update({
       'tabungan': pil == 'a'
           ? saldoSekarang == null
               ? int.tryParse(jumlah.text)!
@@ -199,21 +201,22 @@ class _ConfirmPageTabunganState extends State<ConfirmPageTabungan> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: MediaQuery.of(context).size.width * 0.9,
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
+                      const Text(
                         'Tersimpan',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.check_circle,
                         size: 94,
                         color: Colors.green,
